@@ -1,7 +1,7 @@
 fun main() {
     println("--- part one ---")
-    val cat = Cat("Murzik")
-    val dog = Dog("Tuzik")
+    val cat = Cat("Murzik", 50)
+    val dog = Dog("Tuzik", 100)
     val pets = listOf(cat, dog)
     pets.forEach {
         it.eat()
@@ -18,5 +18,10 @@ fun main() {
     val masha = Human(dog)
     masha.feedPet()
     masha.walkWithPet()
-}
 
+    println("\n\n--- experiment with sealed class ---")
+    val fish = Fish("okun")
+    val cheese = Cheese("rossiysky cheese")
+    cat.stealFood(fish)
+    cat.stealFood(fish, cheese)
+}

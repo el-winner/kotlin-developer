@@ -1,20 +1,24 @@
-class Dog(override val name: String) : Pet() {
+class Dog(name: String, initialEnergy: Int) : Pet(name, initialEnergy) {
 
     private var walksWithFamily = 0
 
     override fun eat() {
         energy += 50
-        "is eating...".printAction()
+        println(toStringPretty("is eating..."))
     }
 
     override fun walk() {
         energy -= 50
         walksWithFamily++
-        "is walking".printAction()
+        println(toStringPretty("is walking..."))
+        if (energy <= 0)
+            sleep()
     }
 
     fun shakeTail() {
         energy -= 1
-        "is shaking tail".printAction()
+        println(toStringPretty("is shaking tail"))
+        if (energy <= 0)
+            sleep()
     }
 }

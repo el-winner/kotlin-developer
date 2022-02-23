@@ -1,34 +1,40 @@
-class Cat(override val name: String) : Pet() {
+class Cat(name: String, initialEnergy: Int) : Pet(name, initialEnergy) {
 
     private var itemsStolen = 0
 
     override fun eat() {
         energy += 20
-        "is eating...".printAction()
+        println(toStringPretty("is eating..."))
     }
 
     override fun walk() {
         energy -= 20
-        "is walking...".printAction()
+        println(toStringPretty("is walking..."))
+        if (energy <= 0)
+            sleep()
     }
 
     fun purr() {
         energy -= 5
-        "is purring...".printAction()
+        println(toStringPretty("is purring..."))
+        if (energy <= 0)
+            sleep()
     }
 
     fun stealFood(fish: Fish) {
         energy += 20
         itemsStolen++
-        "omnomnom...".printAction()
+        println(toStringPretty("omnomnom...tasty ${fish.name}"))
     }
 
     fun stealFood(fish: Fish, cheese: Cheese) {
         energy += 40
         itemsStolen += 2
-        "omnomnom...".printAction()
+        println(toStringPretty("omnomnomomnomnom...tasty ${fish.name} and ${cheese.name}"))
     }
 }
 
-class Fish
-class Cheese
+sealed interface Food
+
+class Fish(val name: String) : Food
+class Cheese(val name: String) : Food

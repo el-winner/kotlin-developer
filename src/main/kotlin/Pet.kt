@@ -1,10 +1,20 @@
-abstract class Pet {
-    abstract val name: String
-    protected var energy = 100
+abstract class Pet(
+    val name: String,
+    initialEnergy: Int) {
+
+    protected var energy = initialEnergy
+
     abstract fun eat()
+
     abstract fun walk()
-    fun String.printAction() {
-        print("$name ")
-        println(this)
+
+    protected fun sleep() {
+        energy = 100
+        println(toStringPretty("is sleeping..."))
+    }
+
+    protected fun toStringPretty(action: String): String {
+        return "$name $action\n" +
+            "energy level is $energy"
     }
 }
