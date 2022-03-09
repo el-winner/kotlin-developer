@@ -2,7 +2,7 @@ abstract class Pet(
     val name: String,
     initialEnergy: Int) {
 
-    protected var energy = initialEnergy
+    var energy = initialEnergy
 
     abstract fun eat()
 
