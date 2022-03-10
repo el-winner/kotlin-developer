@@ -15,7 +15,7 @@ class CatTest {
         cat.walk()
 
         // then
-        assertEquals(80, cat.energy)
+        assertEquals(80, cat.getPetEnergy())
 
     }
 
@@ -28,6 +28,6 @@ class CatTest {
         cat.walk()
 
         // then
-        assertEquals(100, cat.energy)
+        assertEquals(100, cat.getPetEnergy())
     }
 }

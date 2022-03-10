@@ -32,7 +32,7 @@ class HumanTest {
         human.walkWithPet()
 
         // then
-        assertEquals(100, pet.energy)
+        assertEquals(100, pet.getPetEnergy())
         verify(exactly = 1) { pet.walk() }
         verify(exactly = 1) { pet["sleep"]() }
     }
@@ -47,7 +47,7 @@ class HumanTest {
         human.walkWithPet()
 
         // then
-        assertEquals(50, pet.energy)
+        assertEquals(50, pet.getPetEnergy())
         verify(exactly = 1) { pet.walk() }
         verify(exactly = 0) { pet["sleep"]() }
     }
