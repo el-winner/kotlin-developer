@@ -9,6 +9,7 @@ class ArrayQueue<T>() : MyQueue<T> {
 
     constructor(capacity: Int) : this() {
         this.capacity = capacity
+        array = arrayOfNulls(capacity)
     }
 
     /**
