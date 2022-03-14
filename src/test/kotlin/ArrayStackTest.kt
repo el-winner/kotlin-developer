@@ -3,100 +3,100 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import java.util.*
 
-class MyStackTest {
+class ArrayStackTest {
 
     @Test
     fun `should push the element onto the top`() {
         // given
-        val myStack = MyStack<Int>()
+        val arrayStack = ArrayStack<Int>()
         val realStack = Stack<Int>()
 
         // when
-        val actual = myStack.push(5)
+        val actual = arrayStack.push(5)
         val expected = realStack.push(5)
 
         // then
         assertEquals(expected, actual)
-        assertEquals(realStack.size, myStack.size())
-        assertEquals(realStack[0], myStack[0])
+        assertEquals(realStack.size, arrayStack.size())
+        assertEquals(realStack[0], arrayStack[0])
     }
 
     @Test
     fun `should push the element onto the top after resizing inner array`() {
         // given
-        val myStack = MyStack<Int>()
-        val previousCapacity = myStack.capacity()
+        val arrayStack = ArrayStack<Int>()
+        val previousCapacity = arrayStack.capacity()
 
         // when
         for (i in 0 until 17)
-            myStack.push(5)
+            arrayStack.push(5)
 
         // then
         assertEquals(16, previousCapacity)
-        assertEquals(24, myStack.capacity())
-        assertEquals(17, myStack.size())
-        assertEquals(5, myStack[16])
+        assertEquals(24, arrayStack.capacity())
+        assertEquals(17, arrayStack.size())
+        assertEquals(5, arrayStack[16])
     }
 
     @Test
     fun `should pop an element successfully`() {
         // given
-        val myStack = MyStack<Int>()
-        myStack.push(5)
+        val arrayStack = ArrayStack<Int>()
+        arrayStack.push(5)
 
         // when
-        val result = myStack.pop()
+        val result = arrayStack.pop()
 
         // then
         assertEquals(5, result)
-        assertEquals(0, myStack.size())
+        assertEquals(0, arrayStack.size())
     }
 
     @Test
     fun `should throw EmptyStackException at pop() call when stack size is 0`() {
         // given
-        val myStack = MyStack<Int>()
+        val arrayStack = ArrayStack<Int>()
 
         // then
         assertThrows<EmptyStackException> {
-            myStack.pop()
+            arrayStack.pop()
         }
     }
 
     @Test
     fun `should get last element from stack`() {
         // given
-        val myStack = MyStack<Int>()
-        myStack.push(5)
-        myStack.push(3)
+        val arrayStack = ArrayStack<Int>()
+        arrayStack.push(5)
+        arrayStack.push(3)
 
         // when
-        val result = myStack.peek()
+        val result = arrayStack.peek()
 
         // then
         assertEquals(3, result)
-        assertEquals(3, myStack[1])
-        assertEquals(2, myStack.size())
+        assertEquals(3, arrayStack[1])
+        assertEquals(2, arrayStack.size())
     }
 
     @Test
     fun `should throw EmptyStackException at peek() call when stack size is 0`() {
         // given
-        val myStack = MyStack<Int>()
+        val arrayStack = ArrayStack<Int>()
 
         // then
         assertThrows<EmptyStackException> {
-            myStack.peek()
+            arrayStack.peek()
         }
     }
 
     @Test
     fun `should return true when stack is empty `() {
         // given
-        val myStack = MyStack<Int>()
+        val arrayStack = ArrayStack<Int>()
 
         // when
-        val result = myStack.empty()
+        val result = arrayStack.empty()
 
         // then
         assertTrue(result)
@@ -105,13 +105,24 @@ class MyStackTest {
     @Test
     fun `should return false when stack is not empty `() {
         // given
-        val myStack = MyStack<Int>()
-        myStack.push(1)
+        val arrayStack = ArrayStack<Int>()
+        arrayStack.push(1)
 
         // when
-        val result = myStack.empty()
+        val result = arrayStack.empty()
 
         // then
         assertFalse(result)
+    }
+
+    @Test
+    fun `should create stack with secondary constructor`() {
+        // given
+
+        // when
+        val arrayQueue = ArrayStack<Int>(20)
+
+        // then
+        assertEquals(20, arrayQueue.capacity())
     }
 }
