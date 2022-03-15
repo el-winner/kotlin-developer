@@ -6,12 +6,12 @@ import java.util.*
  */
 class ArrayStack<T>() : MyStack<T> {
     private var capacity = 16
-    private var array = arrayOfNulls<Any>(capacity)
+    private var array = arrayOfNulls<Any>(capacity) as Array<T?>
     private var lastElementIndex = -1
 
     constructor(capacity: Int) : this() {
         this.capacity = capacity
-        array = arrayOfNulls(capacity)
+        array = arrayOfNulls<Any>(capacity) as Array<T?>
     }
 
     /**
@@ -84,7 +84,7 @@ class ArrayStack<T>() : MyStack<T> {
      */
     private fun resize() {
         capacity += capacity / 2
-        val newArray = arrayOfNulls<Any>(capacity)
+        val newArray = arrayOfNulls<Any>(capacity) as Array<T?>
         System.arraycopy(array, 0, newArray, 0, lastElementIndex + 1)
         array = newArray
     }
