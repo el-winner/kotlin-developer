@@ -1,7 +1,9 @@
 import java.math.BigDecimal
 import java.math.BigDecimal.ROUND_HALF_UP
 
-class CarService {
+class CarService(
+    private val transliterator: Transliterator
+) {
 
     /**
      * Метод, который преобразует поля нашего класса
@@ -17,7 +19,7 @@ class CarService {
                     transliterator.convertCyrillicToLatin(it.name),
                     transliterator.convertCyrillicToLatin(it.brand),
                     transliterator.convertCyrillicToLatin(it.typeOfBody),
-                    BigDecimal(it.price * DOLLAR_RATE).setScale(2, ROUND_HALF_UP).toDouble(),
+                    it.price.multiply(DOLLAR_RATE).setScale(2, ROUND_HALF_UP),
                     it.gasMileage
                 )
             }.sortedBy { it.price }
@@ -43,7 +45,6 @@ class CarService {
             .toList()
 
     companion object {
-        private val transliterator = Transliterator()
-        private const val DOLLAR_RATE = 0.0093
+        private val DOLLAR_RATE = BigDecimal(0.0093)
     }
 }
