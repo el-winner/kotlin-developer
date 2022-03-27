@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice
 @RestControllerAdvice
 class ControllerAdviceConfig {
 
-    private val log = LoggerFactory.getLogger(javaClass)
-
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     fun handleIllegalArgumentException(e: IllegalArgumentException): String? {
@@ -30,5 +28,9 @@ class ControllerAdviceConfig {
     fun handleException(e: Exception): String {
         log.error(e.message, e)
         return "Пожалуйста, зайдите позже"
+    }
+
+    companion object {
+        private val log = LoggerFactory.getLogger(ControllerAdviceConfig::class.java)
     }
 }
