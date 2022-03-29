@@ -23,6 +23,9 @@ class PersonService(
     fun getPerson(id: Long) =
         personRepository.getPerson(id).toDto()
 
-    fun getAllByAge(age: Int, page: Int?, size: Int?) =
+    fun getAllByAge(age: Int, page: Int, size: Int) =
         personRepository.getAllByAge(age, page, size).map { it.toDto() }
+
+    fun getNumberOfPersons() = personRepository.getNumberOfPersons()
+
 }
