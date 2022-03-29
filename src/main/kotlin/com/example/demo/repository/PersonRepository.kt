@@ -16,7 +16,11 @@ class PersonRepository {
     fun getPerson(id: Long) =
         persons[id] ?: throw IllegalArgumentException("Человек с данным id не найден")
 
-    fun getAllByAge(age: Int) = persons
-        .filter { it.value.age == age }.values
+    fun getAllByAge(age: Int, page: Int?, size: Int?) = persons.values
+        .asSequence()
+        .filter { it.age == age }
+        .drop(size!! * (page!! - 1))
+        .take(size)
+        .toList()
         .ifEmpty { throw IllegalArgumentException("Людей данного возраста не найдено") }
 }

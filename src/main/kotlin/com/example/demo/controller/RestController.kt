@@ -26,7 +26,9 @@ class RestController(
 
     @GetMapping("/getAllByAge")
     fun getAllByAge(
-        @RequestParam age: Int
-    ): Collection<PersonResponse> =
-        personService.getAllByAge(age)
+        @RequestParam age: Int,
+        @RequestParam page: Int? = null,
+        @RequestParam size: Int? = null
+    ): List<PersonResponse> =
+        personService.getAllByAge(age, page, size)
 }

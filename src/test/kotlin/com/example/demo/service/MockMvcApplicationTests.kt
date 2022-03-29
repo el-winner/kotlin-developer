@@ -71,7 +71,7 @@ class MockMvcApplicationTests {
 
     @Test
     fun `should return list of persons of same age`() {
-        every { personRepository.getAllByAge(any()) } returns list
+        every { personRepository.getAllByAge(any(), any(), any()) } returns list
 
         mockMvc.perform(
             get("/persons/getAllByAge")
@@ -88,7 +88,7 @@ class MockMvcApplicationTests {
 
     @Test
     fun `should return error message when getAllByAge() fails`() {
-        every { personRepository.getAllByAge(any()) } throws illegalStateException
+        every { personRepository.getAllByAge(any(), any(), any()) } throws illegalStateException
 
         mockMvc.perform(
             get("/persons/getAllByAge")
