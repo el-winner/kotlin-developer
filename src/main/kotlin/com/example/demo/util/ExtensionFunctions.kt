@@ -1,18 +1,16 @@
 package com.example.demo.util
 
-import com.example.demo.domain.PersonResponseModel
-import com.example.demo.dto.PersonResponse
+import com.example.demo.domain.PersonModel
+import com.example.demo.dto.Person
 
-fun PersonResponse.toModel(): PersonResponseModel =
-    PersonResponseModel(
-        this.nameInCyrillic,
-        this.nameInLatin,
-        this.age
+fun Person.toModel(): PersonModel =
+    PersonModel(
+        name = this.name,
+        age = this.age
     )
 
-fun PersonResponseModel.toDto(): PersonResponse =
-    PersonResponse(
-        this.nameInCyrillic,
-        this.nameInLatin,
+fun PersonModel.toDto(): Person =
+    Person(
+        this.name,
         this.age
     )

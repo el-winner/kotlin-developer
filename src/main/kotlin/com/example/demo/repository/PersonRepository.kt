@@ -1,30 +1,14 @@
 package com.example.demo.repository
 
-import com.example.demo.domain.PersonResponseModel
-import org.springframework.stereotype.Repository
+import com.example.demo.domain.PersonModel
 
-@Repository
-class PersonRepository {
 
-    private val persons = mutableMapOf<Long, PersonResponseModel>()
-    private var id = -1L
+interface PersonRepository {
+    fun getPerson(id: Long): PersonModel
 
-    fun addPerson(personResponseModel: PersonResponseModel) {
-        persons[++id] = personResponseModel
-    }
+    fun getPersons(): List<PersonModel>
 
-    fun getPerson(id: Long) =
-        persons[id] ?: throw IllegalArgumentException("Человек с данным id не найден")
+    fun getPersonsByAge(age: Int): List<PersonModel>
 
-    fun getAllByAge(age: Int, page: Int, size: Int) =
-        persons.values
-            .asSequence()
-            .filter { it.age == age }
-            .drop(size * (page - 1))
-            .take(size)
-            .toList()
-            .ifEmpty { throw IllegalArgumentException("Людей данного возраста не найдено") }
-
-    fun getNumberOfPersons() =
-        persons.size
+    fun savePerson(person: PersonModel)
 }

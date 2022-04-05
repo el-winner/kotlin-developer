@@ -10,20 +10,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice
 class ControllerAdviceConfig {
 
     @ExceptionHandler
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    fun handleIllegalArgumentException(e: IllegalArgumentException): String? {
-        log.warn(e.message, e)
-        return e.message
-    }
-
-    @ExceptionHandler
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    fun handleIllegalStateException(e: IllegalStateException): String? {
-        log.warn(e.message, e)
-        return e.message
-    }
-
-    @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     fun handleException(e: Exception): String {
         log.error(e.message, e)
