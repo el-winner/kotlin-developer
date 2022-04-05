@@ -1,10 +1,8 @@
 package com.example.demo.repository
 
 import com.example.demo.domain.PersonModel
-import org.springframework.stereotype.Repository
 
-//@Primary
-@Repository
+
 class CommonJpaPersonRepository(
     private val jpaPersonRepository: JpaPersonRepository
 ) : PersonRepository {

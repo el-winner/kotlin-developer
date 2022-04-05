@@ -1,13 +1,10 @@
 package com.example.demo.repository
 
 import com.example.demo.domain.PersonModel
-import org.springframework.context.annotation.Primary
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.core.PreparedStatementCreator
-import org.springframework.stereotype.Repository
 
-@Primary
-@Repository
+
 class CommonJdbcPersonRepository(
     private val jdbcTemplate: JdbcTemplate
 ) : PersonRepository {
