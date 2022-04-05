@@ -2,15 +2,24 @@ package com.example.demo.repository
 
 import com.example.demo.domain.PersonModel
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
+import org.springframework.test.annotation.DirtiesContext
 
 @DataJpaTest
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 internal class CommonJpaPersonRepositoryTest {
 
     @Autowired
     private lateinit var jpaPersonRepository: JpaPersonRepository
+
+    @BeforeEach
+    fun setUp() {
+        jpaPersonRepository.save(PersonModel(name = "Petya", age = 20))
+        jpaPersonRepository.save(PersonModel(name = "Katya", age = 30))
+    }
 
     @Test
     fun getPerson() {
@@ -28,7 +37,6 @@ internal class CommonJpaPersonRepositoryTest {
         val result = jpaPersonRepository.findAll()
 
         // then
-        println("buuuu:" + result)
         assertEquals(2, result.size)
     }
 

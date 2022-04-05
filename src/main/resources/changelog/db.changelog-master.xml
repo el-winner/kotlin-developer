@@ -5,32 +5,16 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
     <changeSet id="create" author="elvina">
-        <sql>
-            CREATE TABLE IF NOT EXISTS persons
-            (
-                id
-                IDENTITY
-                NOT
-                NULL
-                PRIMARY
-                KEY,
-                person_name
-                VARCHAR
-                NOT
-                NULL,
-                age
-                INTEGER
-                NOT
-                NULL
-            );
-        </sql>
-    </changeSet>
-    <changeSet id="fill" author="elvina">
-        <sql>
-            INSERT INTO persons (person_name, age)
-            VALUES ('Petya', 20);
-            INSERT INTO persons (person_name, age)
-            VALUES ('Katya', 30);
-        </sql>
+       <createTable tableName="persons">
+           <column name="id" type="identity">
+               <constraints primaryKey="true" nullable="false" />
+           </column>
+           <column name="person_name" type="varchar">
+               <constraints nullable="false"/>
+           </column>
+           <column name="age" type="int">
+               <constraints nullable="false"/>
+           </column>
+       </createTable>
     </changeSet>
 </databaseChangeLog>

@@ -1,15 +1,16 @@
 package com.example.demo.repository
 
 import com.example.demo.domain.PersonModel
+import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest
 import org.springframework.jdbc.core.JdbcTemplate
+import org.springframework.test.annotation.DirtiesContext
 import javax.sql.DataSource
 
 @JdbcTest
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 internal class CommonJdbcPersonRepositoryTest {
 
     @Autowired
@@ -19,6 +20,13 @@ internal class CommonJdbcPersonRepositoryTest {
 
     @BeforeEach
     fun setUp() {
+        commonJdbcPersonRepository = CommonJdbcPersonRepository(JdbcTemplate(ds))
+        commonJdbcPersonRepository.savePerson(PersonModel(name = "Petya", age = 20))
+        commonJdbcPersonRepository.savePerson(PersonModel(name = "Katya", age = 30))
+    }
+
+    @AfterEach
+    fun tearDown() {
         commonJdbcPersonRepository = CommonJdbcPersonRepository(JdbcTemplate(ds))
     }
 
