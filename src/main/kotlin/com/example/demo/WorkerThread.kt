@@ -10,22 +10,20 @@ class WorkerThread(
 
     override fun run() {
         while (true) {
-            var task: Runnable? = null
-            synchronized(taskQueue) {
+            val task = synchronized(taskQueue) {
                 if (taskQueue.isEmpty()) {
                     try {
                         (taskQueue as Object).wait()
                     } catch (e: InterruptedException) {
                         isStopped = true
+                        currentThread().interrupt()
                     }
                 }
-                if (!isStopped) {
-                    task = taskQueue.poll()
-                }
+                taskQueue.poll()
             }
             if (isStopped)
                 break
-            task!!.run()
+            task?.run()
         }
     }
 }

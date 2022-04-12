@@ -8,7 +8,7 @@ class ThreadPool(
     numberOfThreads: Int
 ) : Executor {
 
-    private val threadList = LinkedList<WorkerThread?>()
+    private val threadList = LinkedList<WorkerThread>()
 
     private val taskQueue = LinkedBlockingQueue<Runnable>()
 
@@ -31,7 +31,7 @@ class ThreadPool(
 
     fun shutdown() {
         for (i in 0 until threadList.size) {
-            threadList[i]!!.interrupt()
+            threadList[i].interrupt()
         }
     }
 }

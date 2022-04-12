@@ -2,22 +2,24 @@ package com.example.demo
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 
 class ThreadPoolTest {
 
     @Test
-    fun `should test ThreadPool`() {
-        val pool = ThreadPool(5)
+    fun `thread pool should turn array of zeroes into array of ones`() {
+        val arraySize = 7
+        val array = IntArray(arraySize)
+        val pool = ThreadPool(4)
 
-        assertDoesNotThrow {
-            for (i in 0 until 11) {
-                pool.execute {
-                    println("task $i running ...")
-                }
+        for (i in 0 until arraySize) {
+            pool.execute {
+                array[i] = 1
             }
-            pool.shutdown()
+        }
+        pool.shutdown()
+        for (i in 0 until arraySize) {
+            assertEquals(1, array[i])
         }
     }
 
