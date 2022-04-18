@@ -2,7 +2,7 @@ package com.example.demo.utils
 
 import com.example.demo.domain.PersonModel
 import com.example.demo.dto.EnrichedPerson
-import com.example.demo.dto.Person
+import com.example.demo.dto.PersonResponse
 
 fun EnrichedPerson.toModel(): PersonModel {
     return PersonModel(
@@ -12,8 +12,8 @@ fun EnrichedPerson.toModel(): PersonModel {
     )
 }
 
-fun PersonModel.toPerson(): Person {
-    return Person(
+fun PersonModel.toPerson(): PersonResponse {
+    return PersonResponse(
             name = name,
             age = age
     )

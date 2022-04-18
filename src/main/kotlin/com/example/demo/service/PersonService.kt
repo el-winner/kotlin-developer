@@ -1,7 +1,8 @@
 package com.example.demo.service
 
 import com.example.demo.client.PersonClient
-import com.example.demo.dto.Person
+import com.example.demo.dto.PersonRequest
+import com.example.demo.dto.PersonResponse
 import com.example.demo.repository.PersonRepository
 import com.example.demo.utils.toModel
 import com.example.demo.utils.toPerson
@@ -13,19 +14,21 @@ import org.springframework.stereotype.Service
 
 @Service
 class PersonService(
-        private val personClient: PersonClient,
-        private val personRepository: PersonRepository
+    private val personClient: PersonClient,
+    private val personRepository: PersonRepository
 ) {
 
-    fun getPerson(id: Long): Person {
+    fun getPerson(id: Long): PersonResponse {
         return personRepository.findById(id).get().toPerson()
     }
 
-    fun savePerson(person: Person) {
+     fun savePerson(person: PersonRequest) {
         CoroutineScope(Dispatchers.Default).launch {
-            val enrichedPerson = personClient.enrichPerson(person)
+            val enrichedPerson = personClient.enrichPersonAsync(person).await()
             withContext(Dispatchers.IO) {
-                personRepository.save(enrichedPerson.toModel())
+                enrichedPerson.subscribe {
+                    personRepository.save(it.toModel())
+                }
             }
         }
     }

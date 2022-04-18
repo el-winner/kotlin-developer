@@ -4,7 +4,7 @@ import javax.persistence.*
 
 @Table(name = "my_persons")
 @Entity
-data class PersonModel(
+class PersonModel(
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "person_id")

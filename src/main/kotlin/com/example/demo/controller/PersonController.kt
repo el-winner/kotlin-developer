@@ -1,6 +1,7 @@
 package com.example.demo.controller
 
-import com.example.demo.dto.Person
+import com.example.demo.dto.PersonRequest
+import com.example.demo.dto.PersonResponse
 import com.example.demo.service.PersonService
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -13,12 +14,12 @@ class PersonController(
 ) {
 
     @GetMapping("my-persons/{id}")
-    fun getPerson(@PathVariable id: Long): Person {
+    fun getPerson(@PathVariable id: Long): PersonResponse {
         return personService.getPerson(id)
     }
 
     @PostMapping("my-persons")
-    fun savePerson(person: Person) {
+    fun savePerson(person: PersonRequest) {
         personService.savePerson(person)
     }
 }

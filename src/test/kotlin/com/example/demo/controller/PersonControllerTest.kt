@@ -3,7 +3,9 @@ package com.example.demo.controller
 import com.example.demo.client.PersonClient
 import com.example.demo.dto.EnrichedPerson
 import com.ninjasquad.springmockk.MockkBean
-import io.mockk.every
+import io.mockk.coEvery
+import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.containsString
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
@@ -16,6 +18,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import reactor.core.publisher.Mono
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -25,34 +28,44 @@ internal class PersonControllerTest {
     @Autowired
     private lateinit var mockMvc: MockMvc
 
-    @MockkBean(relaxed = true)
+    @MockkBean(relaxed = true, relaxUnitFun = true)
     private lateinit var personClient: PersonClient
+
 
     @BeforeAll
     fun setUp() {
-        every { personClient.enrichPerson(any()) } returns EnrichedPerson("Katya", 25, 2000)
-
-        mockMvc.perform(
-                post("/my-persons")
-                        .param("name", "Katya")
-                        .param("age", "25")
+        coEvery { personClient.enrichPersonAsync(any()) } returns CompletableDeferred(
+            Mono.just(
+                EnrichedPerson(
+                    "Katya",
+                    25,
+                    2000
+                )
+            )
         )
+        runBlocking {
+            mockMvc.perform(
+                post("/my-persons")
+                    .param("name", "Katya")
+                    .param("age", "25")
+            )
+        }
     }
 
     @Test
     fun `should post object successfully`() {
         mockMvc.perform(
-                post("/my-persons")
-                        .param("name", "Katya")
-                        .param("age", "25")
+            post("/my-persons")
+                .param("name", "Katya")
+                .param("age", "25")
         ).andExpect(status().isOk)
     }
 
     @Test
     fun `should get object successfully`() {
         mockMvc.perform(get("/my-persons/1"))
-                .andExpect(status().isOk)
-                .andExpect(content().string(containsString("25")))
-                .andExpect(content().string(containsString("Katya")))
+            .andExpect(status().isOk)
+            .andExpect(content().string(containsString("25")))
+            .andExpect(content().string(containsString("Katya")))
     }
 }

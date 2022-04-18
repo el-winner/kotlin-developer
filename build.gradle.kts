@@ -27,6 +27,7 @@ dependencies {
     implementation("org.springdoc:springdoc-openapi-ui:1.6.6")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
     runtimeOnly("com.h2database:h2")
+    runtimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.6.1")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("com.ninja-squad:springmockk:3.1.1")
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
