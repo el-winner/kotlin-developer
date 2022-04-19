@@ -4,7 +4,6 @@ import com.example.demo.client.PersonClient
 import com.example.demo.dto.EnrichedPerson
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.coEvery
-import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.containsString
 import org.junit.jupiter.api.BeforeAll
@@ -18,7 +17,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-import reactor.core.publisher.Mono
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -31,17 +29,10 @@ internal class PersonControllerTest {
     @MockkBean(relaxed = true, relaxUnitFun = true)
     private lateinit var personClient: PersonClient
 
-
     @BeforeAll
     fun setUp() {
-        coEvery { personClient.enrichPersonAsync(any()) } returns CompletableDeferred(
-            Mono.just(
-                EnrichedPerson(
-                    "Katya",
-                    25,
-                    2000
-                )
-            )
+        coEvery { personClient.enrichPerson(any()) } returns EnrichedPerson(
+            "Katya", 25, 2000
         )
         runBlocking {
             mockMvc.perform(

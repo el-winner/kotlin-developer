@@ -22,13 +22,11 @@ class PersonService(
         return personRepository.findById(id).get().toPerson()
     }
 
-     fun savePerson(person: PersonRequest) {
+    fun savePerson(person: PersonRequest) {
         CoroutineScope(Dispatchers.Default).launch {
-            val enrichedPerson = personClient.enrichPersonAsync(person).await()
+            val enrichedPerson = personClient.enrichPerson(person)
             withContext(Dispatchers.IO) {
-                enrichedPerson.subscribe {
-                    personRepository.save(it.toModel())
-                }
+                personRepository.save(enrichedPerson.toModel())
             }
         }
     }
